@@ -219,8 +219,8 @@ class auth_plugin_cohort extends auth_plugin_ldap {
         $ret = array ();
         $ldapconnection = $this->ldap_connect();
 
-        $textlib = textlib_get_instance();
-        $group = $textlib->convert($group, 'utf-8', $this->config->ldapencoding);
+        //$textlib = textlib_get_instance();
+        $group = core_text::convert($group, 'utf-8', $this->config->ldapencoding);
         //this line break the script with Moodle 2.1 2.2  under windows
         //see http://tracker.moodle.org/browse/MDL-30859
         //$group = textlib::convert($group, 'utf-8', $this->config->ldapencoding);
@@ -350,8 +350,8 @@ class auth_plugin_cohort extends auth_plugin_ldap {
             return $ret;
         }
 
-        $textlib = textlib_get_instance();
-        $group = $textlib->convert($group, 'utf-8', $this->config->ldapencoding);
+        //$textlib = textlib_get_instance();
+        $group = core_text::convert($group, 'utf-8', $this->config->ldapencoding);
         //this line break the script with Moodle 2.1 2.2  under windows
         //see http://tracker.moodle.org/browse/MDL-30859
         //$group = textlib::convert($group, 'utf-8', $this->config->ldapencoding);
@@ -484,7 +484,7 @@ class auth_plugin_cohort extends auth_plugin_ldap {
         }
         //in Moodle usernames are always converted to lowercase
         // see auto creating or synching users in auth/ldap/auth.php
-        return textlib::strtolower($matchings[0]);
+        return core_text::strtolower($matchings[0]);
     }
 
     /**
@@ -515,7 +515,7 @@ class auth_plugin_cohort extends auth_plugin_ldap {
             return false;
         }
 
-        $matching = textlib::convert($user[0][$this->config->user_attribute][0], $this->config->ldapencoding, 'utf-8');
+        $matching = core_text::convert($user[0][$this->config->user_attribute][0], $this->config->ldapencoding, 'utf-8');
 
         if ($CFG->debug_ldap_groupes) {
             pp_print_object('found ',$matching);
@@ -523,7 +523,7 @@ class auth_plugin_cohort extends auth_plugin_ldap {
 
         //in Moodle usernames are always converted to lowercase
         // see auto creating or synching users in auth/ldap/auth.php
-        return textlib::strtolower($matching);
+        return core_text::strtolower($matching);
     }
 
 
@@ -630,7 +630,7 @@ class auth_plugin_cohort extends auth_plugin_ldap {
            for ($i = 0; $i < count($users); $i++) {
                $count=$users[$i][$this->config->cohort_synching_ldap_attribute_attribute]['count'];
                for ($j=0; $j <$count; $j++) {
-                   $value=  textlib::convert($users[$i][$this->config->cohort_synching_ldap_attribute_attribute][$j],
+                   $value=  core_text::convert($users[$i][$this->config->cohort_synching_ldap_attribute_attribute][$j],
                                 $this->config->ldapencoding, 'utf-8');
                    if (! in_array ($value, $matchings)) {
                        array_push($matchings,$value);
